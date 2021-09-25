@@ -1,0 +1,59 @@
+version: '3'
+services:
+  sentiment-api:
+    container_name: sentiment-api
+    build:
+      context: ./sentiment-api
+      dockerfile: Dockerfile
+    expose:
+      - 80
+    restart: always
+    volumes:
+      - ./sentiment-api:/usr/src/app
+    environment:
+      - VIRTUAL_HOST=sentiment.thiti.tech
+    networks:
+      sentiment-api:
+        ipv4_address: 10.5.0.6
+    depends_on:
+      - nginx-proxy
+  line-api:
+    container_name: line-api
+    build:
+      context: ./line-api
+      dockerfile: Dockerfile
+    expose:
+      - 80
+    restart: always
+    environment:
+      - VIRTUAL_HOST=lineapi.thiti.tech
+    networks:
+      sentiment-api:
+        ipv4_address: 10.5.0.7
+    depends_on:
+      - nginx-proxy
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: jwilder/nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    restart: always
+    networks:
+      sentiment-api:
+        ipv4_address: 10.5.0.5
+
+networks:
+  sentiment-api:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
+
+volumes:
+  sentimentvolume:
+    external:
+      true
