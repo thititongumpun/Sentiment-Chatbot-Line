@@ -1,9 +1,9 @@
 import re
 
-parcelPattern = "^พัสดุ|พัสดุ|พัสดุ$"
-deliverlyServicePatten = "^เรียกรถ|รถ|รถเข้ารับพัสดุ$"
-servicePattern = "^บริการ|บริการ|บริการจากเรา^|^ตรวจสอบค่าบริการ$|^.*ราคา$|^ราคา|ราคา$"
-promotionPattern = "^โปรโมชั่น|โปรโมชั่น|^รายละเอียดโปรโมชั่น$|^โปรโมชั่น$"
+parcelPattern = ".*พัสดุ|.*สินค้า|.*สั่งของ|.*จัดส่ง|.*กี่วัน|.*รับ|.*เคลม"
+deliverlyServicePatten = "^เรียกรถ|รถ|(?:.*รถเข้ารับพัสดุ)|.*ราคารถ"
+servicePattern = ".*บริการ|บริการ|บริการจากเรา^|^ตรวจสอบค่าบริการ$|^.*ราคา$|^ราคา|ราคา$|.*พนักงาน|.*สอบถาม|.*ผู้ติดต่อ|.*ตรวจสอบค่าบริการ|.*ติดต่อ|.*โทรไม่|.*แย่|.*ห่วยแตก|.*ถาม|.*ตาม"
+promotionPattern = ".*โปรโมชั่น|โปรโมชัน|^รายละเอียดโปรโมชั่น$|^โปรโมชั่น$"
 
 def service_type(sentimentText) -> str:
   if re.findall(parcelPattern,sentimentText) or re.match(parcelPattern, sentimentText):
