@@ -26,7 +26,7 @@ services:
       - 80
     restart: always
     environment:
-      - VIRTUAL_HOST=lineapi.thiti.tech
+      - VIRTUAL_HOST=line.thiti.tech
     networks:
       sentiment-api:
         ipv4_address: 10.5.0.7
