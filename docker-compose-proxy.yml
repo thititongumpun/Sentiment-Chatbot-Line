@@ -1,0 +1,40 @@
+version: '3'
+services:
+  sentiment-api:
+    container_name: sentiment-api
+    build:
+      context: ./sentiment-api
+      dockerfile: Dockerfile
+    expose:
+      - 80
+    restart: always
+    volumes:
+      - ./sentiment-api:/usr/src/app
+    environment:
+      - VIRTUAL_HOST=sentiment.thiti.tech
+      - LETSENCRYPT_HOST=sentiment.thiti.tech
+    networks:
+      proxy:
+  line-api:
+    container_name: line-api
+    build:
+      context: ./line-api
+      dockerfile: Dockerfile
+    expose:
+      - 80
+    restart: always
+    environment:
+      - VIRTUAL_HOST=line.thiti.tech
+      - LETSENCRYPT_HOST=line.thiti.tech
+    networks:
+      proxy:
+
+networks:
+  proxy:
+    external:
+      true
+
+volumes:
+  sentimentvolume:
+    external:
+      true
