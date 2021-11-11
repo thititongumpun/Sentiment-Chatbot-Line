@@ -7,3 +7,6 @@ start:
 
 start-api:
 	docker-compose -f docker-compose-proxy.yml up -d
+
+env:
+	cd line-api && cp .env.sample .env
