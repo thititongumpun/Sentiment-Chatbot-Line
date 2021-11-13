@@ -31,3 +31,40 @@ async def get_data(sentiment: SentimentData) -> SentimentData:
   await initial_csv(data)
   return sentiment
 
+# from pydantic import BaseModel
+# import tensorflow as tf
+# load_model = tf.keras.models.load_model
+# import numpy as np
+# class Data(BaseModel):
+#     text: str
+
+# def loadModel():
+#     global predict_model
+
+#     predict_model = load_model('./Algorithm/lstm.h5')
+
+# loadModel()
+
+# async def predict(text):
+#     clean = re.sub(r'[^ก-๙]', " ", text)
+#     test_word = word_tokenize(clean)
+#     test_word = [w.lower() for w in test_word]
+#     test_ls = train_word_tokenizer.texts_to_sequences(test_word)
+#     print(test_word)
+#     if [] in test_ls:
+#       test_ls = list(filter(None, test_ls))
+      
+#     test_ls = np.array(test_ls).reshape(1, len(test_ls))
+  
+#     x = padding_doc(test_ls, max_length)
+    
+#     pred = predict_model.predict(x)
+  
+  
+#   return pred
+
+# @app.post('/getclass/')
+# async def get_class(data: Data):
+#     category, confidence = await predict(data)
+#     res = {'class': category, 'confidence':confidence}
+#     return {'results': res}
