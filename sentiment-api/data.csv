@@ -1,1 +1,3 @@
 Sentiment,SentimentText,Model
+Neutral,บริการแย่มาก,lstm
+Negative,บริการแย่มาก,logistic regression

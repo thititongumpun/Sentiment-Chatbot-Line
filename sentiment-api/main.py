@@ -90,6 +90,8 @@ async def get_predict(sentimentText: str):
   text = [sentimentText]
   vec = vector.transform(text)
   prediction = model.predict(vec)  
+  data = [prediction[0], sentimentText, 'logistic']
+  await initial_csv(data)
   return {"Sentiment" : sentimentText, "Predict": prediction[0], "Service Type": guard}
 
 @app.post('/predict-lstm')
@@ -97,6 +99,8 @@ async def get_lstm_predict(sentimentText: str):
   guard = service_type(sentimentText)
   pred = predictLSTM(sentimentText)
   res = get_final_output(pred, unique_category)
+  data = [res[0], sentimentText, 'lstm']
+  await initial_csv(data)
   return {"Sentiment" : sentimentText, "Predict": res[0], "Service Type": guard}
 
 @app.post("/data", response_model=SentimentData, status_code=200)
