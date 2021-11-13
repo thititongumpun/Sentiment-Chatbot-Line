@@ -11,7 +11,13 @@ from utils import cleansing
 import numpy as np
 import tensorflow as tf
 import pandas as pd
+from logging.config import dictConfig
+import logging
+from Models.logger import LogConfig
 load_model = tf.keras.models.load_model
+
+dictConfig(LogConfig().dict())
+logger = logging.getLogger("sentiment-api")
 
 app = FastAPI()
 
@@ -22,8 +28,8 @@ if __name__ != "main":
 else:
     logger.setLevel(logging.DEBUG)
 
-vector = load("vectors.joblib")
-model = load("model.joblib")
+vector = load("./Algorithm/vectors.joblib")
+model = load("./Algorithm/logistic.joblib")
 
 def loadModel():
   global predict_model
