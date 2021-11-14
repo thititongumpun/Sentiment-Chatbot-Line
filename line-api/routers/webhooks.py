@@ -66,10 +66,13 @@ def message_text(event):
     lstm = httpx.post(LSTM_URL, params=params)
     sentiment = lr.json()['Sentiment']
     lr_predict = lr.json()['Predict']
+    # nb_predict = lr.json()['Predict']
     lstm_predict = lstm.json()['Predict']
     serviceType = lr.json()['Service Type']
     textLine = f'Text: {sentiment}'
-    lrLine = f'Predict: {lr_predict}'
+    lrLine = f'LR_Predict: {lr_predict}'
+    # nbLine = f'NB_Predict: {nb_predict}'
+    nbLine = f'NB_Predict: ยังไม่มี'
     lstmLine = f'LSTM_Predict: {lstm_predict}'
     serviceTypeLine = f'Service Type: {serviceType}'
 
@@ -97,6 +100,11 @@ def message_text(event):
                 {
                     "type": "text",
                     "text": lrLine,
+                    "size": "xs"
+                },                
+                {
+                    "type": "text",
+                    "text": nbLine,
                     "size": "xs"
                 },
                 {

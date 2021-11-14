@@ -59,7 +59,8 @@ def predictLSTM(text):
   test_word = word_tokenize(clean)
   test_word = [w.lower() for w in test_word]
   test_ls = predict_word_tokenizer.texts_to_sequences(test_word)
-  print(test_word)
+  # print(test_word)
+  logger.info(test_word)
   if [] in test_ls:
     test_ls = list(filter(None, test_ls))
   test_ls = np.array(test_ls).reshape(1, len(test_ls))
@@ -77,7 +78,8 @@ def get_final_output(pred, classes):
   predictions = -np.sort(-predictions)
   
   for i in range(pred.shape[1]):
-    print("%s has confidence = %s" % (classes[i], (predictions[i])))
+    # print("%s has confidence = %s" % (classes[i], (predictions[i])))
+    logger.info("%s has confidence = %s" % (classes[i], (predictions[i])))
     return classes[i], predictions[i]
 
 @app.get("/")
