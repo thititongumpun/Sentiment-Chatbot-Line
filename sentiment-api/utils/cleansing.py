@@ -11,7 +11,8 @@ def cleaning(sentences):
     temp = []
     for s in sentences:
         clean = re.sub(r'[^ก-๙]', "", s)
-        w = word_tokenize(clean, engine='deepcut')
+        # w = word_tokenize(clean, engine='deepcut')
+        w = word_tokenize(clean, engine='attacut')
         temp.append([i.lower() for i in w])
         words.append(' '.join(word for word in w if word not in thai_stopwords and word not in punctuation and word not in ("?", ".", ";", ":", "!", '"', "ๆ", "ฯ", "|")))
     

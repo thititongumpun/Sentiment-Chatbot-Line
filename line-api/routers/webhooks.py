@@ -16,6 +16,7 @@ handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
 
 URL = os.getenv('SENTIMENT_API')
 LSTM_URL = os.getenv('LSTM_SENTIMENT_API')
+NB_URL = os.getenv('NB_SENTIMENT_API')
 
 router = APIRouter(
     prefix="/webhooks",
@@ -64,15 +65,15 @@ def message_text(event):
     params = {'sentimentText': event.message.text}
     lr = httpx.get(URL, params=params)
     lstm = httpx.post(LSTM_URL, params=params)
+    nb = httpx.post(NB_URL, params=params)
     sentiment = lr.json()['Sentiment']
     lr_predict = lr.json()['Predict']
-    # nb_predict = lr.json()['Predict']
+    nb_predict = nb.json()['Predict']
     lstm_predict = lstm.json()['Predict']
     serviceType = lr.json()['Service Type']
     textLine = f'Text: {sentiment}'
     lrLine = f'LR_Predict: {lr_predict}'
-    # nbLine = f'NB_Predict: {nb_predict}'
-    nbLine = f'NB_Predict: ยังไม่มี'
+    nbLine = f'NB_Predict: {nb_predict}'
     lstmLine = f'LSTM_Predict: {lstm_predict}'
     serviceTypeLine = f'Service Type: {serviceType}'
 

@@ -12,6 +12,7 @@ click==8.0.1
 colorama==0.4.4
 coverage==5.5
 deepcut==0.7.0.0
+dill==0.3.4
 execnet==1.9.0
 fastapi==0.68.1
 flake8==3.9.2
@@ -53,6 +54,7 @@ pycodestyle==2.7.0
 pydantic==1.8.2
 pyflakes==2.3.1
 pyparsing==2.4.7
+pyreadline==2.1
 pytest==6.2.5
 pytest-cache==1.0
 pytest-cov==2.12.1

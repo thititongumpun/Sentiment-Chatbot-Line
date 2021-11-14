@@ -1,1 +1,5 @@
 Sentiment,SentimentText,Model
+Neutral,ติดตามของนานหลายวัน,logistic
+Negative,ติดตามของนานหลายวัน,lstm
+Negative,พนักงานส่งของช้่า,naivebayes
+Neutral,พนักงานส่งของช้่า,logistic

@@ -30,6 +30,8 @@ else:
 
 vector = load("./Algorithm/vectors.joblib")
 model = load("./Algorithm/logistic.joblib")
+nb_vector = load('./Algorithm/nb_vectors.joblib')
+nb_model = load('./Algorithm/naive.joblib')
 
 def loadModel():
   global predict_model
@@ -93,6 +95,16 @@ async def get_predict(sentimentText: str):
   vec = vector.transform(text)
   prediction = model.predict(vec)  
   data = [prediction[0], sentimentText, 'logistic']
+  await initial_csv(data)
+  return {"Sentiment" : sentimentText, "Predict": prediction[0], "Service Type": guard}
+
+@app.post("/predict-nb")
+async def get_predict(sentimentText: str):
+  guard = service_type(sentimentText)
+  text = [sentimentText]
+  vec = nb_vector.transform(text)
+  prediction = nb_model.predict(vec)  
+  data = [prediction[0], sentimentText, 'naivebayes']
   await initial_csv(data)
   return {"Sentiment" : sentimentText, "Predict": prediction[0], "Service Type": guard}
 
