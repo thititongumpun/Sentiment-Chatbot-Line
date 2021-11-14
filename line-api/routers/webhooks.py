@@ -15,6 +15,7 @@ line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
 
 URL = os.getenv('SENTIMENT_API')
+LSTM_URL = os.getenv('LSTM_SENTIMENT_API')
 
 router = APIRouter(
     prefix="/webhooks",
@@ -61,13 +62,16 @@ def message_text(event):
     print("!!!!!!!!!!!!!!!!!!!!!!")
 
     params = {'sentimentText': event.message.text}
-    r = httpx.get(URL, params=params)
-    sentiment = r.json()['Sentiment']
-    predict = r.json()['Predict']
-    serviceType = r.json()['Service Type']
+    lr = httpx.get(URL, params=params)
+    lstm = httpx.post(LSTM_URL, params=params)
+    sentiment = lr.json()['Sentiment']
+    lr_predict = lr.json()['Predict']
+    lstm_predict = lstm.json()['Predict']
+    serviceType = lr.json()['Service Type']
     textLine = f'Text: {sentiment}'
-    textSecondLine = f'Predict: {predict}'
-    textThirdLine = f'Service Type: {serviceType}'
+    lrLine = f'Predict: {lr_predict}'
+    lstmLine = f'LSTM_Predict: {lstm_predict}'
+    serviceTypeLine = f'Service Type: {serviceType}'
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -92,14 +96,19 @@ def message_text(event):
                 },
                 {
                     "type": "text",
-                    "text": textSecondLine,
+                    "text": lrLine,
                     "size": "xs"
                 },
                 {
                     "type": "text",
-                    "text": textThirdLine,
+                    "text": lstmLine,
                     "size": "xs"
-                }
+                },
+                {
+                    "type": "text",
+                    "text": serviceTypeLine,
+                    "size": "xs"
+                },
                 ]
             }
             }
