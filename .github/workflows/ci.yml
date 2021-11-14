@@ -14,9 +14,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-            sudo chmod -R 755 /home/lineadmin/ci
-            sudo chown -R username:username /home/lineadmin/ci
-            sudo setfacl -R -m u:www-data:rwx /home/lineadmin/ci
+            ls -l
         
     - uses: actions/checkout@v2
     - name: Checking out the repository
