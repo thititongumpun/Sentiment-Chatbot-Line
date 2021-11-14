@@ -13,6 +13,19 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: whoami
+        script: |
+            sudo chmod -R 755 /home/lineadmin/ci
+            sudo chown -R username:username /home/lineadmin/ci
+            sudo setfacl -R -m u:www-data:rwx /home/lineadmin/ci
+        
+    - uses: actions/checkout@v2
     - name: Checking out the repository
-      uses: actions/checkout@v1
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: "*"
+        target: "/home/lineadmin/ci"
+      
