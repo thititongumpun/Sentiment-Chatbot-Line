@@ -92,7 +92,7 @@ async def read_root():
 async def get_predict(sentimentText: str):
   guard = service_type(sentimentText)
   text = [sentimentText]
-  vec = vector.transform(text)
+  vec = vectorizer.transform(text)
   prediction = model.predict(vec)  
   data = [prediction[0], sentimentText, 'logistic']
   await initial_csv(data)
