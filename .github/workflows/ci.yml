@@ -17,14 +17,14 @@ jobs:
           cd /home/lineadmin/bot/sentiment-api 
           cp data.csv /home/lineadmin/backup-data
         
-    - uses: actions/checkout@v2
-    - name: Checking out the repository
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        source: "*"
-        target: "/home/lineadmin/ci"
+    # - uses: actions/checkout@v2
+    # - name: Checking out the repository
+    #   uses: appleboy/scp-action@master
+    #   with:
+    #     host: ${{ secrets.HOST }}
+    #     username: ${{ secrets.USERNAME }}
+    #     password: ${{ secrets.PASSWORD }}
+    #     port: ${{ secrets.PORT }}
+    #     source: "*"
+    #     target: "/home/lineadmin/ci"
       
