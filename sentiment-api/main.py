@@ -47,10 +47,8 @@ category = df.Sentiment.values
 unique_category = list(set(category))
 cleaned_words, temp = cleansing.cleaning(sentiment)
 max_length = cleansing.max_length(temp)
-print('...cleansing data...')
 logger.info('...cleansing data...')
 cleaned_words, temp = cleansing.cleaning(sentiment)
-print('...done...')
 logger.info('...done...')
 predict_word_tokenizer = cleansing.create_tokenizer(cleaned_words)
 encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, cleaned_words)
@@ -92,7 +90,7 @@ async def read_root():
 async def get_predict(sentimentText: str):
   guard = service_type(sentimentText)
   text = [sentimentText]
-  vec = vectorizer.transform(text)
+  vec = vector.transform(text)
   prediction = model.predict(vec)  
   data = [prediction[0], sentimentText, 'logistic']
   await initial_csv(data)
