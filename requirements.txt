@@ -15,6 +15,7 @@ coverage==5.5
 deepcut==0.7.0.0
 dill==0.3.4
 docopt==0.6.2
+emoji==1.6.1
 execnet==1.9.0
 fastapi==0.68.1
 fire==0.4.0

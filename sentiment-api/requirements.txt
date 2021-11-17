@@ -6,7 +6,6 @@ astunparse==1.6.3
 atomicwrites==1.4.0
 attacut==1.0.6
 attrs==21.2.0
-attacut==1.0.6
 cachetools==4.2.4
 certifi==2021.5.30
 charset-normalizer==2.0.6
@@ -16,6 +15,7 @@ coverage==5.5
 deepcut==0.7.0.0
 dill==0.3.4
 docopt==0.6.2
+emoji==1.6.1
 execnet==1.9.0
 fastapi==0.68.1
 fire==0.4.0
