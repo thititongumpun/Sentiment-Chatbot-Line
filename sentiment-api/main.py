@@ -14,6 +14,7 @@ import pandas as pd
 from logging.config import dictConfig
 import logging
 from Models.logger import LogConfig
+from pythainlp.ulmfit import process_thai
 load_model = tf.keras.models.load_model
 
 dictConfig(LogConfig().dict())
@@ -32,6 +33,7 @@ vector = load("./Algorithm/vectors.joblib")
 model = load("./Algorithm/logistic.joblib")
 nb_vector = load('./Algorithm/nb_vectors.joblib')
 nb_model = load('./Algorithm/naive.joblib')
+nb_tf_vector = load('./Algorithm/nb_tf_vectors.joblib')
 
 def loadModel():
   global predict_model
@@ -56,7 +58,8 @@ padded_doc = cleansing.padding_doc(encoded_doc, max_length)
 
 def predictLSTM(text):
   clean = re.sub(r'[^ก-๙]', " ", text)
-  test_word = word_tokenize(clean)
+  # test_word = word_tokenize(clean)
+  test_word = process_thai(clean)
   test_word = [w.lower() for w in test_word]
   test_ls = predict_word_tokenizer.texts_to_sequences(test_word)
   # print(test_word)
@@ -101,7 +104,8 @@ async def get_predict(sentimentText: str):
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = nb_vector.transform(text)
-  prediction = nb_model.predict(vec)  
+  tf_idf_vec = nb_tf_vector.transform(vec)
+  prediction = nb_model.predict(tf_idf_vec)  
   data = [prediction[0], sentimentText, 'naivebayes']
   await initial_csv(data)
   return {"Sentiment" : sentimentText, "Predict": prediction[0], "Service Type": guard}
