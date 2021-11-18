@@ -5,12 +5,6 @@ from pythainlp import word_tokenize
 from pythainlp.corpus.common import thai_stopwords
 thai_stopwords = list(thai_stopwords())
 from string import punctuation
-from pythainlp.ulmfit import (process_thai,
-    replace_rep_after,
-    fix_html,
-    ungroup_emoji,
-    replace_wrep_post,
-    remove_space)
 
 def cleaning(sentences):
     words = []
@@ -18,12 +12,7 @@ def cleaning(sentences):
     for s in sentences:
         clean = re.sub(r'[^ก-๙]', "", s)
         # w = word_tokenize(clean, engine='deepcut')
-        # w = word_tokenize(clean, engine='attacut')
-        w = process_thai(clean,
-                pre_rules=[replace_rep_after, fix_html],
-                    post_rules=[ungroup_emoji,
-                                replace_wrep_post,
-                                remove_space])
+        w = word_tokenize(clean, engine='attacut')
         temp.append([i.lower() for i in w])
         words.append(' '.join(w).lower())
 

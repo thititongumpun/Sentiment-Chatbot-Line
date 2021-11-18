@@ -14,7 +14,6 @@ import pandas as pd
 from logging.config import dictConfig
 import logging
 from Models.logger import LogConfig
-from pythainlp.ulmfit import process_thai
 load_model = tf.keras.models.load_model
 
 dictConfig(LogConfig().dict())
@@ -30,6 +29,7 @@ else:
     logger.setLevel(logging.DEBUG)
 
 vector = load("./Algorithm/vectors.joblib")
+lr_tf_vector = load('./Algorithm/lr_tf_vectors.joblib')
 model = load("./Algorithm/logistic.joblib")
 nb_vector = load('./Algorithm/nb_vectors.joblib')
 nb_model = load('./Algorithm/naive.joblib')
@@ -47,19 +47,18 @@ df['Sentiment'] = df['Sentiment'].map({0: 'Negative', 1: 'Neutral'})
 sentiment = df.SentimentText.values
 category = df.Sentiment.values
 unique_category = list(set(category))
-cleaned_words, temp = cleansing.cleaning(sentiment)
-max_length = cleansing.max_length(temp)
 logger.info('...cleansing data...')
 cleaned_words, temp = cleansing.cleaning(sentiment)
 logger.info('...done...')
+max_length = cleansing.max_length(temp)
 predict_word_tokenizer = cleansing.create_tokenizer(cleaned_words)
 encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, cleaned_words)
 padded_doc = cleansing.padding_doc(encoded_doc, max_length)
+logger.info('api ready....')
 
 def predictLSTM(text):
   clean = re.sub(r'[^ก-๙]', " ", text)
-  # test_word = word_tokenize(clean)
-  test_word = process_thai(clean)
+  test_word = word_tokenize(clean, engine='attacut')
   test_word = [w.lower() for w in test_word]
   test_ls = predict_word_tokenizer.texts_to_sequences(test_word)
   # print(test_word)
@@ -94,7 +93,8 @@ async def get_predict(sentimentText: str):
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = vector.transform(text)
-  prediction = model.predict(vec)  
+  tf_idf_vec = lr_tf_vector.transform(vec)
+  prediction = model.predict(tf_idf_vec)  
   data = [prediction[0], sentimentText, 'logistic']
   await initial_csv(data)
   return {"Sentiment" : sentimentText, "Predict": prediction[0], "Service Type": guard}
