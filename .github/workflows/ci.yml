@@ -1,5 +1,9 @@
 name: remote ssh command
-on: [push]
+# on: [push]
+on:
+  schedule:
+    - cron: '55 * * * *'
+
 jobs:
 
   build:
