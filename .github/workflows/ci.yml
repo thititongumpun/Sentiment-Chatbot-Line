@@ -1,8 +1,9 @@
 name: remote ssh command
-# on: [push]
 on:
   schedule:
     - cron: '55 * * * *'
+  push:
+    branches: [master]
 
 jobs:
 
