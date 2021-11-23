@@ -1,2 +1,132 @@
 Sentiment,SentimentText,Model
 
+Negative,ของอยู่ที่เดิมหลายวันแล้ว,logistic
+Negative,ของอยู่ที่เดิมหลายวันแล้ว,lstm
+Negative,ของอยู่ที่เดิมหลายวันแล้ว,naivebayes
+Negative,พัสดุเสียหาย,logistic
+Negative,พัสดุเสียหาย,lstm
+Negative,พัสดุเสียหาย,naivebayes
+Neutral,บริการยอดเยี่ยม,logistic
+Neutral,บริการยอดเยี่ยม,lstm
+Neutral,บริการยอดเยี่ยม,naivebayes
+Neutral,ของโคดดี,logistic
+Neutral,ของโคดดี,lstm
+Neutral,ของโคดดี,naivebayes
+Negative,ของเสียของ,logistic
+Negative,ของเสียของ,lstm
+Neutral,ของเสียของ,naivebayes
+Negative,ลำไยเน่าหมด,logistic
+Negative,ลำไยเน่าหมด,lstm
+Negative,ลำไยเน่าหมด,naivebayes
+Negative,มะม่วงเน่าหมด,logistic
+Negative,มะม่วงเน่าหมด,lstm
+Negative,มะม่วงเน่าหมด,naivebayes
+Negative,บริการช้าไม่ได้เรื่อง,logistic
+Negative,บริการช้าไม่ได้เรื่อง,lstm
+Negative,บริการช้าไม่ได้เรื่อง,naivebayes
+Negative,ไม่สามารถติดตามพุสดุ,logistic
+Negative,ไม่สามารถติดตามพุสดุ,lstm
+Neutral,ไม่สามารถติดตามพุสดุ,naivebayes
+Negative,ไม่สามารถติดตามพัสดุ,logistic
+Negative,ไม่สามารถติดตามพัสดุ,lstm
+Neutral,ไม่สามารถติดตามพัสดุ,naivebayes
+Negative,ปัญหาการจัดส่งพัสดุ,logistic
+Neutral,ปัญหาการจัดส่งพัสดุ,lstm
+Negative,ปัญหาการจัดส่งพัสดุ,naivebayes
+Negative,เช็คแล้วสถานะไม่ชัดเจนจะให้คะแนนยังไง,logistic
+Negative,เช็คแล้วสถานะไม่ชัดเจนจะให้คะแนนยังไง,lstm
+Negative,เช็คแล้วสถานะไม่ชัดเจนจะให้คะแนนยังไง,naivebayes
+Negative,ทำไมสถานะขึ้นไม่รับสาย​ ขึ้นปิดเครื่องคะ​ เปิดเครื่องทั้งวัน​ เพราะ​ต้องรอลูกค้าโทรมาด้วย​ บ้าบอมาขึ้นสถานะ​ปิดเครื่อง​ ต้องการ​รับพัสดุ​พรุ่,logistic
+Negative,ทำไมสถานะขึ้นไม่รับสาย​ ขึ้นปิดเครื่องคะ​ เปิดเครื่องทั้งวัน​ เพราะ​ต้องรอลูกค้าโทรมาด้วย​ บ้าบอมาขึ้นสถานะ​ปิดเครื่อง​ ต้องการ​รับพัสดุ​พรุ่,lstm
+Negative,ทำไมสถานะขึ้นไม่รับสาย​ ขึ้นปิดเครื่องคะ​ เปิดเครื่องทั้งวัน​ เพราะ​ต้องรอลูกค้าโทรมาด้วย​ บ้าบอมาขึ้นสถานะ​ปิดเครื่อง​ ต้องการ​รับพัสดุ​พรุ่,naivebayes
+Negative,สถานะขึ้นว่าส่งถึงแล้ว แต่ยังไม่ได้รับนะคะ,logistic
+Negative,สถานะขึ้นว่าส่งถึงแล้ว แต่ยังไม่ได้รับนะคะ,lstm
+Negative,สถานะขึ้นว่าส่งถึงแล้ว แต่ยังไม่ได้รับนะคะ,naivebayes
+Negative,"อยากทราบว่าใครเป็นคนเซ็นรับครับ สถานะขึ้นรับเรียบร้อยแล้ว แต่ไม่รู้พัสดุอยู่ไหน
+",logistic
+Neutral,"อยากทราบว่าใครเป็นคนเซ็นรับครับ สถานะขึ้นรับเรียบร้อยแล้ว แต่ไม่รู้พัสดุอยู่ไหน
+",lstm
+Negative,"อยากทราบว่าใครเป็นคนเซ็นรับครับ สถานะขึ้นรับเรียบร้อยแล้ว แต่ไม่รู้พัสดุอยู่ไหน
+",naivebayes
+Negative,ต้องการส่งสินค้าคืนและขอรับเงินคืนค่ะ สินค้าไม่ได้สั่ง ลูกค้าง่ายไปสินค้าถึงบ้านเรียกเก็ญเงินจ่ายเลย ไม่ดูก่อน ผิดพลาดจึงขอคืนสินค้าค่ะ,logistic
+Negative,ต้องการส่งสินค้าคืนและขอรับเงินคืนค่ะ สินค้าไม่ได้สั่ง ลูกค้าง่ายไปสินค้าถึงบ้านเรียกเก็ญเงินจ่ายเลย ไม่ดูก่อน ผิดพลาดจึงขอคืนสินค้าค่ะ,lstm
+Negative,ต้องการส่งสินค้าคืนและขอรับเงินคืนค่ะ สินค้าไม่ได้สั่ง ลูกค้าง่ายไปสินค้าถึงบ้านเรียกเก็ญเงินจ่ายเลย ไม่ดูก่อน ผิดพลาดจึงขอคืนสินค้าค่ะ,naivebayes
+Negative,ส่งจากชลบุรีไปกรุงเทพปกติวันเดียวเอง รอบนี้ทำไมนานจัง,logistic
+Neutral,ส่งจากชลบุรีไปกรุงเทพปกติวันเดียวเอง รอบนี้ทำไมนานจัง,lstm
+Negative,ส่งจากชลบุรีไปกรุงเทพปกติวันเดียวเอง รอบนี้ทำไมนานจัง,naivebayes
+Negative,สั่งของไปผ่านทางThisshopระบุที่อยู่จัดส่งชัดเจน ตอนแรกนะเลขTrackไปตรวจสอบขึ้นว่าไม่พบพัสดุ พอมาเช้านี้พัสดุไปโผล่ที่สุราษฎร์ธานีรับเเล้วเรียบร้อย,logistic
+Negative,สั่งของไปผ่านทางThisshopระบุที่อยู่จัดส่งชัดเจน ตอนแรกนะเลขTrackไปตรวจสอบขึ้นว่าไม่พบพัสดุ พอมาเช้านี้พัสดุไปโผล่ที่สุราษฎร์ธานีรับเเล้วเรียบร้อย,lstm
+Negative,สั่งของไปผ่านทางThisshopระบุที่อยู่จัดส่งชัดเจน ตอนแรกนะเลขTrackไปตรวจสอบขึ้นว่าไม่พบพัสดุ พอมาเช้านี้พัสดุไปโผล่ที่สุราษฎร์ธานีรับเเล้วเรียบร้อย,naivebayes
+Negative,พัสดุไม่ขยับเลยตั้งแต่วันที่15 ช่วยดูให้หน่อยได้มั้ยค,logistic
+Negative,พัสดุไม่ขยับเลยตั้งแต่วันที่15 ช่วยดูให้หน่อยได้มั้ยค,lstm
+Negative,พัสดุไม่ขยับเลยตั้งแต่วันที่15 ช่วยดูให้หน่อยได้มั้ยค,naivebayes
+Neutral,"ถ้าเราจะไปเอาพัสดุของเราที่คลังขนส่งได้ไหมคะ
+ถ้",logistic
+Negative,"ถ้าเราจะไปเอาพัสดุของเราที่คลังขนส่งได้ไหมคะ
+ถ้",lstm
+Neutral,"ถ้าเราจะไปเอาพัสดุของเราที่คลังขนส่งได้ไหมคะ
+ถ้",naivebayes
+Neutral,ต้องการให้พัสดุถึงมือผู้รับภายในวันนี้ 18/11 เพราะพัสดุเป็นอาหารแช่แข็งถ้าเกิน24ชั่วโมงเกรงว่าของจะเสียครับ,logistic
+Negative,ต้องการให้พัสดุถึงมือผู้รับภายในวันนี้ 18/11 เพราะพัสดุเป็นอาหารแช่แข็งถ้าเกิน24ชั่วโมงเกรงว่าของจะเสียครับ,lstm
+Negative,ต้องการให้พัสดุถึงมือผู้รับภายในวันนี้ 18/11 เพราะพัสดุเป็นอาหารแช่แข็งถ้าเกิน24ชั่วโมงเกรงว่าของจะเสียครับ,naivebayes
+Negative,อยากแจ้งร้องเรียน พนักงานจัดส่ง,logistic
+Negative,อยากแจ้งร้องเรียน พนักงานจัดส่ง,lstm
+Negative,อยากแจ้งร้องเรียน พนักงานจัดส่ง,naivebayes
+Negative,ร้องเรียนเจ้าหน้าที่จัดส่งพัสดุไม่ใส่หน้ากากอนามัย,logistic
+Negative,ร้องเรียนเจ้าหน้าที่จัดส่งพัสดุไม่ใส่หน้ากากอนามัย,lstm
+Negative,ร้องเรียนเจ้าหน้าที่จัดส่งพัสดุไม่ใส่หน้ากากอนามัย,naivebayes
+Negative,ได้รับพัสดุไม่ครบ,logistic
+Negative,ได้รับพัสดุไม่ครบ,lstm
+Negative,ได้รับพัสดุไม่ครบ,naivebayes
+Negative,ของหายไม่ถึงมือผู้รับ,logistic
+Negative,ของหายไม่ถึงมือผู้รับ,lstm
+Negative,ของหายไม่ถึงมือผู้รับ,naivebayes
+Negative,ทำไมโทรติดต่อCall Center 1217 ไม่ได้ครับ,logistic
+Negative,ทำไมโทรติดต่อCall Center 1217 ไม่ได้ครับ,lstm
+Negative,ทำไมโทรติดต่อCall Center 1217 ไม่ได้ครับ,naivebayes
+Neutral,สอบถามครับ สามารถโทรติดต่อกับทางเข้า Call Center ได้ทางไหนครับ,logistic
+Neutral,สอบถามครับ สามารถโทรติดต่อกับทางเข้า Call Center ได้ทางไหนครับ,lstm
+Neutral,สอบถามครับ สามารถโทรติดต่อกับทางเข้า Call Center ได้ทางไหนครับ,naivebayes
+Negative,ไม่สามารถเข้าใช้งาน App ได้,logistic
+Negative,ไม่สามารถเข้าใช้งาน App ได้,lstm
+Negative,ไม่สามารถเข้าใช้งาน App ได้,naivebayes
+Negative,รหัส OTP ที่ได้รับไม่สามารถใช้งานได้,logistic
+Neutral,รหัส OTP ที่ได้รับไม่สามารถใช้งานได้,lstm
+Neutral,รหัส OTP ที่ได้รับไม่สามารถใช้งานได้,naivebayes
+Negative,รหัสโอทีพีที่ได้รับไม่สามารถใช้งานได้,logistic
+Negative,รหัสโอทีพีที่ได้รับไม่สามารถใช้งานได้,lstm
+Negative,รหัสโอทีพีที่ได้รับไม่สามารถใช้งานได้,naivebayes
+Neutral,ส่งพัสดุเป็นจำนวนมากเคอรี่มีราคาพิเศษไหม,logistic
+Neutral,ส่งพัสดุเป็นจำนวนมากเคอรี่มีราคาพิเศษไหม,lstm
+Neutral,ส่งพัสดุเป็นจำนวนมากเคอรี่มีราคาพิเศษไหม,naivebayes
+Negative,เกิน,logistic
+Negative,เกิน,lstm
+Negative,เกิน,naivebayes
+Negative,พูดจาไม่ดี,logistic
+Negative,พูดจาไม่ดี,lstm
+Negative,พูดจาไม่ดี,naivebayes
+Neutral,ส่งแตงโมกี่บาทคับ,logistic
+Neutral,ส่งแตงโมกี่บาทคับ,lstm
+Neutral,ส่งแตงโมกี่บาทคับ,naivebayes
+Neutral,มีบริการอะไรบ้าง,logistic
+Neutral,มีบริการอะไรบ้าง,lstm
+Neutral,มีบริการอะไรบ้าง,naivebayes
+Negative,กาก,logistic
+Negative,กาก,lstm
+Negative,กาก,naivebayes
+Negative,ระบบกาก,logistic
+Negative,ระบบกาก,lstm
+Negative,ระบบกาก,naivebayes
+Negative,ระบบแย่,logistic
+Neutral,ระบบแย่,lstm
+Negative,ระบบแย่,naivebayes
+Neutral,แย่มาก,logistic
+Neutral,แย่มาก,lstm
+Neutral,แย่มาก,naivebayes
+Negative,ระบบแย่มาก,logistic
+Neutral,ระบบแย่มาก,lstm
+Negative,ระบบแย่มาก,naivebayes
+Negative,ระบบแย่มาก,logistic
+Negative,ระบบแย่มาก,naivebayes
+Neutral,ระบบแย่มาก,lstm
+Neutral,ระบบแย่มาก,lstm
