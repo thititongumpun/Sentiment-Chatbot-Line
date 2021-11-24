@@ -6,6 +6,7 @@ from Service.init_csv import initial_csv
 import logging
 from fastapi.logger import logger
 from pythainlp import word_tokenize
+from pythainlp.util import normalize
 import re
 from utils import cleansing
 import numpy as np
@@ -28,6 +29,7 @@ if __name__ != "main":
 else:
     logger.setLevel(logging.DEBUG)
 
+logger.info("....load models....")
 vector = load("./Algorithm/vectors.joblib")
 lr_tf_vector = load('./Algorithm/lr_tf_vectors.joblib')
 model = load("./Algorithm/logistic.joblib")
@@ -35,11 +37,13 @@ nb_vector = load('./Algorithm/nb_vectors.joblib')
 nb_model = load('./Algorithm/naive.joblib')
 nb_tf_vector = load('./Algorithm/nb_tf_vectors.joblib')
 
+
 def loadModel():
   global predict_model
   predict_model = load_model('./Algorithm/lstm.h5')
 
 loadModel()
+logger.info('....done....')
 
 df = pd.read_csv('./data/data.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
 df = df.reset_index(drop=True)
@@ -58,6 +62,7 @@ logger.info('api ready....')
 
 def predictLSTM(text):
   clean = re.sub(r'[^ก-๙]', " ", text)
+  clean = normalize(clean)
   test_word = word_tokenize(clean, engine='attacut')
   test_word = [w.lower() for w in test_word]
   test_ls = predict_word_tokenizer.texts_to_sequences(test_word)

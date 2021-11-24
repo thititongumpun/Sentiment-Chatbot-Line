@@ -3,6 +3,7 @@ from keras.preprocessing.sequence import pad_sequences
 import re
 from pythainlp import word_tokenize
 from pythainlp.corpus.common import thai_stopwords
+from pythainlp.util import normalize
 thai_stopwords = list(thai_stopwords())
 from string import punctuation
 
@@ -12,7 +13,8 @@ def cleaning(sentences):
     for s in sentences:
         clean = re.sub(r'[^ก-๙]', "", s)
         # w = word_tokenize(clean, engine='deepcut')
-        w = word_tokenize(clean, engine='attacut')
+        w = normalize(clean)
+        w = word_tokenize(w, engine='attacut')
         temp.append([i.lower() for i in w])
         words.append(' '.join(w).lower())
 
