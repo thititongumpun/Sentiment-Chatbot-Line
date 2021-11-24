@@ -164,3 +164,7 @@ Negative,พัสดุเสียหาย,lstm
 Neutral,บริการดีมากคัฟ,lstm
 Negative,กากหมาแย่มากส้นตีนเคอรี่,lstm
 Negative,สวัสดีครับ มาร้องเรียนเรื่องพนักงานบริการไม่ดีที่สาขาบางใหญ่,lstm
+Neutral,dasda,lstm
+Negative,แจ่มเลย,lstm
+Neutral,สวะเปียก,lstm
+Neutral,บริการดีคับ,lstm

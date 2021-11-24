@@ -37,7 +37,6 @@ nb_vector = load('./Algorithm/nb_vectors.joblib')
 nb_model = load('./Algorithm/naive.joblib')
 nb_tf_vector = load('./Algorithm/nb_tf_vectors.joblib')
 
-
 def loadModel():
   global predict_model
   predict_model = load_model('./Algorithm/lstm.h5')
@@ -45,7 +44,8 @@ def loadModel():
 loadModel()
 logger.info('....done....')
 
-df = pd.read_csv('./data/data.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
+# df = pd.read_csv('./data/data.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
+df = pd.read_csv('./data/dataandpythai.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
 df = df.reset_index(drop=True)
 df['Sentiment'] = df['Sentiment'].map({0: 'Negative', 1: 'Neutral'})
 sentiment = df.SentimentText.values
