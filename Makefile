@@ -10,3 +10,6 @@ start-api:
 
 env:
 	cd line-api && cp .env.sample .env
+
+up:
+	docker-compose down && docker-compose build --no-cache && docker-compose up -d
