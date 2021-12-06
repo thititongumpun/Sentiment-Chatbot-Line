@@ -44,7 +44,6 @@ def loadModel():
 loadModel()
 logger.info('....done....')
 
-# df = pd.read_csv('./data/data.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
 df = pd.read_csv('./data/dataandpythai.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
 df = df.reset_index(drop=True)
 df['Sentiment'] = df['Sentiment'].map({0: 'Negative', 1: 'Neutral'})
@@ -61,12 +60,11 @@ padded_doc = cleansing.padding_doc(encoded_doc, max_length)
 logger.info('api ready....')
 
 def predictLSTM(text):
-  clean = re.sub(r'[^ก-๙]', " ", text)
-  clean = normalize(clean)
+  clean = normalize(text)
+  clean = re.sub(r'[^ก-๙]', " ", clean)
   test_word = word_tokenize(clean, engine='attacut')
   test_word = [w.lower() for w in test_word]
   test_ls = predict_word_tokenizer.texts_to_sequences(test_word)
-  # print(test_word)
   logger.info(test_word)
   if [] in test_ls:
     test_ls = list(filter(None, test_ls))
@@ -85,7 +83,6 @@ def get_final_output(pred, classes):
   predictions = -np.sort(-predictions)
   
   for i in range(pred.shape[1]):
-    # print("%s has confidence = %s" % (classes[i], (predictions[i])))
     logger.info("%s has confidence = %s" % (classes[i], (predictions[i])))
     return classes[i], predictions[i]
 

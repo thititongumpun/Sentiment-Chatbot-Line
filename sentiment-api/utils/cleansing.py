@@ -11,9 +11,8 @@ def cleaning(sentences):
     words = []
     temp = []
     for s in sentences:
-        clean = re.sub(r'[^ก-๙]', "", s)
-        # w = word_tokenize(clean, engine='deepcut')
-        w = normalize(clean)
+        w = normalize(s)
+        w = re.sub(r'[^ก-๙]', "", w)
         w = word_tokenize(w, engine='attacut')
         temp.append([i.lower() for i in w])
         words.append(' '.join(w).lower())
