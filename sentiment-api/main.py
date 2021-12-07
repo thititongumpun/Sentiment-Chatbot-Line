@@ -61,7 +61,7 @@ logger.info('api ready....')
 
 def predictLSTM(text):
   clean = normalize(text)
-  clean = re.sub(r'[^ก-๙]', " ", clean)
+  clean = re.sub(r'[^ก-๙]', "", clean)
   test_word = word_tokenize(clean, engine='attacut')
   test_word = [w.lower() for w in test_word]
   test_ls = predict_word_tokenizer.texts_to_sequences(test_word)
