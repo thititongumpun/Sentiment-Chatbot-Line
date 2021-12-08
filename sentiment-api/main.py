@@ -44,7 +44,7 @@ def loadModel():
 loadModel()
 logger.info('....done....')
 
-df = pd.read_csv('./data/dataandpythai.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
+df = pd.read_csv('./data/dataandpythai_V2.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
 df = df.reset_index(drop=True)
 df['Sentiment'] = df['Sentiment'].map({0: 'Negative', 1: 'Neutral'})
 sentiment = df.SentimentText.values
@@ -92,6 +92,7 @@ async def read_root():
 
 @app.get("/predict")
 async def get_predict(sentimentText: str):
+  logger.info(word_tokenize(sentimentText, engine='attacut'))
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = vector.transform(text)
@@ -103,6 +104,7 @@ async def get_predict(sentimentText: str):
 
 @app.post("/predict-nb")
 async def get_predict(sentimentText: str):
+  logger.info(word_tokenize(sentimentText, engine='attacut'))
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = nb_vector.transform(text)
