@@ -5,30 +5,26 @@ from pythainlp import word_tokenize
 from pythainlp.corpus.common import thai_stopwords
 from pythainlp.util import normalize
 thai_stopwords = list(thai_stopwords())
-from string import punctuation
+from pythainlp.ulmfit import *
 
-def cleaning(sentences):
-    words = []
-    temp = []
-    for s in sentences:
-        w = normalize(s)
-        w = re.sub(r'[^ก-๙]', "", w)
-        w = word_tokenize(w, engine='attacut')
-        temp.append([i.lower() for i in w])
-        words.append(' '.join(w).lower())
+def text_process(text):
+    words = re.sub(r'[^ก-๙]', '', text)
+    words = normalize(words)
+    words = process_thai(words,
+                            pre_rules=[replace_rep_after, fix_html, rm_useless_spaces],
+                            post_rules=[ungroup_emoji,
+                            replace_wrep_post_nonum,
+                            remove_space]
+                        )
+    words = ' '.join(word for word in words)
+    return words
 
-    return words, temp
-
+max_length = 484
 def create_tokenizer(words, filters = ''):
     token = Tokenizer(filters=filters)
     token.fit_on_texts(words)
     return token
-
 def encoding_doc(token, words):
     return(token.texts_to_sequences(words))
-
 def padding_doc(encoded_doc, max_length):
     return(pad_sequences(encoded_doc, maxlen = max_length, padding = "post"))
-
-def max_length(words):
-    return(len(max(words, key = len)))

@@ -244,3 +244,17 @@ Neutral,ฉันจะไปสยามพารากอน,naivebayes
 Negative,ระบบกากสิ้นดี,logistic
 Negative,ระบบกากสิ้นดี,lstm
 Negative,ระบบกากสิ้นดี,naivebayes
+Neutral,สบายๆ,lstm
+Negative,บริการห่วยแตกมาก,lstm
+Negative,ระบบห่วย,logistic
+Negative,ระบบห่วย,naivebayes
+Neutral,ระบบห่วย,lstm
+Neutral,ระบบห่วย,lstm
+Neutral,บริการดี,lstm
+Negative,ช้ามาก,lstm
+Negative,ไอสัส,lstm
+Neutral,กินข้าวยัง,lstm
+Negative,อิอิ,lstm
+Negative,ใช้งานได้ดี,lstm
+Neutral,ควยเอ้ย,lstm
+Neutral,ระบบกาก,lstm

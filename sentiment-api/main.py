@@ -15,10 +15,13 @@ import pandas as pd
 from logging.config import dictConfig
 import logging
 from Models.logger import LogConfig
+from sklearn.utils import resample, shuffle
+from pythainlp.ulmfit import *
+
 load_model = tf.keras.models.load_model
 
 dictConfig(LogConfig().dict())
-logger = logging.getLogger("sentiment-api")
+logger = logging.getLogger("gunicorn.error")
 
 app = FastAPI()
 
@@ -44,26 +47,50 @@ def loadModel():
 loadModel()
 logger.info('....done....')
 
+logger.info('...initial data...')
 df = pd.read_csv('./data/dataandpythai_V2.csv', sep=',').drop_duplicates(subset=['Sentiment', 'SentimentText'], keep=False)
 df = df.reset_index(drop=True)
 df['Sentiment'] = df['Sentiment'].map({0: 'Negative', 1: 'Neutral'})
-sentiment = df.SentimentText.values
-category = df.Sentiment.values
-unique_category = list(set(category))
+df['SentimentText'] = df['SentimentText'].apply(cleansing.text_process)
+nan_value = float("NaN")
+df.replace("", nan_value, inplace=True)
+df.dropna(subset = ["SentimentText"], inplace=True)
+
+data_majority = df[df['Sentiment'] == 'Neutral']
+data_minority = df[df['Sentiment'] == 'Negative']
+
+train = pd.concat([data_majority.sample(frac=0.8,random_state=200),
+        data_minority.sample(frac=0.8,random_state=200)])
+test = pd.concat([data_majority.drop(data_majority.sample(frac=0.8,random_state=200).index),
+        data_minority.drop(data_minority.sample(frac=0.8,random_state=200).index)])
+train = shuffle(train)
+test = shuffle(test)
+data_majority = train[train['Sentiment'] == 'Neutral']
+data_minority = train[train['Sentiment'] == 'Negative']
+data_minority_upsampled = resample(data_minority, 
+                                replace=True,
+                                n_samples= data_majority.shape[0],
+                                random_state=123)
+data_upsampled = pd.concat([data_majority, data_minority_upsampled])
+logger.info('....done....')
+
 logger.info('...cleansing data...')
-cleaned_words, temp = cleansing.cleaning(sentiment)
-logger.info('...done...')
-max_length = cleansing.max_length(temp)
-predict_word_tokenizer = cleansing.create_tokenizer(cleaned_words)
-encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, cleaned_words)
+max_length=484
+unique_category = list(set(data_upsampled['Sentiment']))
+predict_word_tokenizer = cleansing.create_tokenizer(df['SentimentText'])
+encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, data_upsampled['SentimentText'])
 padded_doc = cleansing.padding_doc(encoded_doc, max_length)
+logger.info('...done...')
 logger.info('api ready....')
 
 def predictLSTM(text):
-  clean = normalize(text)
-  clean = re.sub(r'[^ก-๙]', "", clean)
-  test_word = word_tokenize(clean, engine='attacut')
-  test_word = [w.lower() for w in test_word]
+  text = normalize(text)
+  test_word = process_thai(text,
+                            pre_rules=[replace_rep_after, fix_html, rm_useless_spaces],
+                            post_rules=[ungroup_emoji,
+                            replace_wrep_post_nonum,
+                            remove_space]
+                          )
   test_ls = predict_word_tokenizer.texts_to_sequences(test_word)
   logger.info(test_word)
   if [] in test_ls:
@@ -92,7 +119,13 @@ async def read_root():
 
 @app.get("/predict")
 async def get_predict(sentimentText: str):
-  logger.info(word_tokenize(sentimentText, engine='attacut'))
+  logger.info(process_thai(sentimentText,
+                            pre_rules=[replace_rep_after, fix_html, rm_useless_spaces],
+                            post_rules=[ungroup_emoji,
+                            replace_wrep_post_nonum,
+                            remove_space]
+                          ))
+  sentimentText = normalize(sentimentText)          
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = vector.transform(text)
@@ -104,7 +137,13 @@ async def get_predict(sentimentText: str):
 
 @app.post("/predict-nb")
 async def get_predict(sentimentText: str):
-  logger.info(word_tokenize(sentimentText, engine='attacut'))
+  logger.info(process_thai(sentimentText,
+                            pre_rules=[replace_rep_after, fix_html, rm_useless_spaces],
+                            post_rules=[ungroup_emoji,
+                            replace_wrep_post_nonum,
+                            remove_space]
+                          ))
+  sentimentText = normalize(sentimentText)
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = nb_vector.transform(text)
