@@ -258,3 +258,32 @@ Negative,อิอิ,lstm
 Negative,ใช้งานได้ดี,lstm
 Neutral,ควยเอ้ย,lstm
 Neutral,ระบบกาก,lstm
+Neutral,ทดสอบ,logistic
+Neutral,ทดสอบกหฟกฟหกฟก,logistic
+Neutral,สวัสดีจร้า,logistic
+Neutral,สบายกันดีไหม,logistic
+Negative,ระบบสังคังมาก,logistic
+Negative,ระบบสังคังมาก,lstm
+Neutral,สบายดีบ่วัยรุ่น,lstm
+Negative,หิวข้าวมากคับ,lstm
+Negative,ระบบสังคังมาก,lstm
+Negative,ระบบสังคังมาก,naivebayes
+Negative,ระบบสังคังมาก,logistic
+Neutral,สอบถามราคา ส่งกล้วยน้ำว้า,logistic
+Neutral,สอบถามราคา ส่งกล้วยน้ำว้า,naivebayes
+Neutral,สอบถามราคา ส่งกล้วยน้ำว้า,lstm
+Neutral,สอบถามราคา ส่งกล้วยน้ำว้า,lstm
+Neutral,หิวเว้ย,lstm
+Neutral,บริษัทสวะปิดไปซะ,lstm
+Negative,กากหมา,lstm
+Neutral,บริษัทสวะปิดไปซะ,lstm
+Negative,บริษัทสวะปิดไปซะ,logistic
+Negative,บริการยอดแย่แห่งปี,lstm
+Neutral,สวัสสสสสสสดี,lstm
+Neutral,สวัสสสสสสสดี,logistic
+Neutral,สวัสสสสสสสดีวัยยรุ่นชาวไทยหัวใจขนตูดด,logistic
+Neutral,สวัสสสสสสสดีวัยยรุ่นชาวไทยหัวใจขนตูดดดดดดด,logistic
+Negative,ไอขยะเปียก,logistic
+Negative,ไอขยะเปียก,logistic
+Negative,ไอขยะเปียกฟหกก,logistic
+Neutral,ไอขยะเปียกอิอิอิอิอิอิอิอิ,logistic

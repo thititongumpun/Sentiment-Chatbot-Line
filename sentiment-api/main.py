@@ -5,7 +5,6 @@ from Models.SentimentData import SentimentData
 from Service.init_csv import initial_csv
 import logging
 from fastapi.logger import logger
-from pythainlp import word_tokenize
 from pythainlp.util import normalize
 import re
 from utils import cleansing
@@ -21,16 +20,10 @@ from pythainlp.ulmfit import *
 load_model = tf.keras.models.load_model
 
 dictConfig(LogConfig().dict())
-logger = logging.getLogger("gunicorn.error")
+logger = logging.getLogger("sentiment-api")
 
 app = FastAPI()
-
-gunicorn_logger = logging.getLogger('gunicorn.error')
-logger.handlers = gunicorn_logger.handlers
-if __name__ != "main":
-    logger.setLevel(gunicorn_logger.level)
-else:
-    logger.setLevel(logging.DEBUG)
+logger.info('Starting application')
 
 logger.info("....load models....")
 vector = load("./Algorithm/vectors.joblib")
@@ -76,7 +69,9 @@ logger.info('....done....')
 
 logger.info('...cleansing data...')
 max_length=484
-unique_category = list(set(data_upsampled['Sentiment']))
+# unique_category = list(set(data_upsampled['Sentiment']))
+# print(unique_category)
+unique_category = ['Neutral', 'Negative']
 predict_word_tokenizer = cleansing.create_tokenizer(df['SentimentText'])
 encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, data_upsampled['SentimentText'])
 padded_doc = cleansing.padding_doc(encoded_doc, max_length)
@@ -119,13 +114,9 @@ async def read_root():
 
 @app.get("/predict")
 async def get_predict(sentimentText: str):
-  logger.info(process_thai(sentimentText,
-                            pre_rules=[replace_rep_after, fix_html, rm_useless_spaces],
-                            post_rules=[ungroup_emoji,
-                            replace_wrep_post_nonum,
-                            remove_space]
-                          ))
-  sentimentText = normalize(sentimentText)          
+  sentimentText = normalize(sentimentText)        
+  sentimentTextToken = cleansing.cleansingTextToken(sentimentText)
+  logger.info(sentimentTextToken)                        
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = vector.transform(text)
@@ -133,17 +124,13 @@ async def get_predict(sentimentText: str):
   prediction = model.predict(tf_idf_vec)  
   data = [prediction[0], sentimentText, 'logistic']
   await initial_csv(data)
-  return {"Sentiment" : sentimentText, "Predict": prediction[0], "Service Type": guard}
+  return {"Sentiment" : sentimentText, "Tokenize": sentimentTextToken, "Predict": prediction[0], "Service Type": guard}
 
 @app.post("/predict-nb")
 async def get_predict(sentimentText: str):
-  logger.info(process_thai(sentimentText,
-                            pre_rules=[replace_rep_after, fix_html, rm_useless_spaces],
-                            post_rules=[ungroup_emoji,
-                            replace_wrep_post_nonum,
-                            remove_space]
-                          ))
   sentimentText = normalize(sentimentText)
+  sentimentTextToken = cleansing.cleansingTextToken(sentimentText)
+  logger.info(sentimentTextToken)                        
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = nb_vector.transform(text)
@@ -151,16 +138,18 @@ async def get_predict(sentimentText: str):
   prediction = nb_model.predict(tf_idf_vec)  
   data = [prediction[0], sentimentText, 'naivebayes']
   await initial_csv(data)
-  return {"Sentiment" : sentimentText, "Predict": prediction[0], "Service Type": guard}
+  return {"Sentiment" : sentimentText, "Tokenize": sentimentTextToken, "Predict": prediction[0], "Service Type": guard}
 
 @app.post('/predict-lstm')
 async def get_lstm_predict(sentimentText: str):
+  sentimentText = normalize(sentimentText)
+  sentimentTextToken = cleansing.cleansingTextToken(sentimentText)
   guard = service_type(sentimentText)
   pred = predictLSTM(sentimentText)
   res = get_final_output(pred, unique_category)
   data = [res[0], sentimentText, 'lstm']
   await initial_csv(data)
-  return {"Sentiment" : sentimentText, "Predict": res[0], "Service Type": guard}
+  return {"Sentiment" : sentimentText, "Tokenize": sentimentTextToken, "Predict": res[0], "Service Type": guard}
 
 @app.post("/data", response_model=SentimentData, status_code=200)
 async def get_data(sentiment: SentimentData) -> SentimentData:
