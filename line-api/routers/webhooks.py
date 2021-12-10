@@ -67,59 +67,115 @@ def message_text(event):
     lstm = httpx.post(LSTM_URL, params=params)
     nb = httpx.post(NB_URL, params=params)
     sentiment = lr.json()['Sentiment']
+    tokenizeText = lr.json()['Tokenize']
     lr_predict = lr.json()['Predict']
     nb_predict = nb.json()['Predict']
     lstm_predict = lstm.json()['Predict']
     serviceType = lr.json()['Service Type']
-    textLine = f'Text: {sentiment}'
-    lrLine = f'LR_Predict: {lr_predict}'
-    nbLine = f'NB_Predict: {nb_predict}'
-    lstmLine = f'LSTM_Predict: {lstm_predict}'
-    serviceTypeLine = f'Service Type: {serviceType}'
+    # textLine = f'Text: {sentiment}'
+    # tokenizeLine = f'Tokenize: {tokenizeText}'
+    # lrLine = f'LR_Predict: {lr_predict}'
+    # nbLine = f'NB_Predict: {nb_predict}'
+    # lstmLine = f'LSTM_Predict: {lstm_predict}'
+    # serviceTypeLine = f'Service Type: {serviceType}'
 
     line_bot_api.reply_message(
         event.reply_token,
         FlexSendMessage(
-        alt_text='hello',
-        contents={
-            "type": "bubble",
-            "body": {
-                "type": "box",
-                "layout": "vertical",
-                "contents": [
-                {
-                    "type": "text",
-                    "text": "Sentiment Service Prediction",
-                    "weight": "bold",
-                    "size": "xs"
-                },
-                {
-                    "type": "text",
-                    "text": textLine,
-                    "size": "xs"
-                },
-                {
-                    "type": "text",
-                    "text": lrLine,
-                    "size": "xs"
-                },                
-                {
-                    "type": "text",
-                    "text": nbLine,
-                    "size": "xs"
-                },
-                {
-                    "type": "text",
-                    "text": lstmLine,
-                    "size": "xs"
-                },
-                {
-                    "type": "text",
-                    "text": serviceTypeLine,
-                    "size": "xs"
-                },
-                ]
-            }
+        alt_text='Service Chatbot',
+        contents=
+                    {
+                    "type": "bubble",
+                    "hero": {
+                        "type": "image",
+                        "url": "https://kmutnb.ac.th/getattachment/about/symbols/logo_kmutnb-(6).png.aspx?width=200&height=200",
+                        "size": "full",
+                        "aspectRatio": "16:9",
+                        "aspectMode": "fit"
+                    },
+                    "body": {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                        {
+                            "type": "text",
+                            "text": "Sentiment Service Prediction",
+                            "weight": "bold",
+                            "size": "md",
+                            "margin": "none",
+                            "align": "center",
+                            "adjustMode": "shrink-to-fit"
+                        },
+                        {
+                            "type": "text",
+                            "text": "Text:",
+                            "size": "md",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(sentiment),
+                            "size": "sm",
+                            "wrap": True
+                        },
+                        {
+                            "type": "text",
+                            "text": "Tokenize:",
+                            "size": "md",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(tokenizeText),
+                            "size": "sm",
+                            "wrap": True
+                        },
+                        {
+                            "type": "text",
+                            "text": "Logistic:",
+                            "size": "md",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(lr_predict),
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": "Naive Bayes:",
+                            "size": "md",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(nb_predict),
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": "LSTM:",
+                            "size": "md",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(lstm_predict),
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": "Service Type:",
+                            "size": "md",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(serviceType),
+                            "size": "sm"
+                        }
+                    ]
+                }
             }
         )
     )
