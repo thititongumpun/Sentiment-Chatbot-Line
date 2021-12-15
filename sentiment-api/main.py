@@ -71,8 +71,8 @@ logger.info('...cleansing data...')
 max_length=484
 # unique_category = list(set(data_upsampled['Sentiment']))
 # print(unique_category)
-# unique_category = ['Neutral', 'Negative']
-unique_category = ['Negative', 'Neutral']
+unique_category = ['Neutral', 'Negative']
+# unique_category = ['Negative', 'Neutral']
 predict_word_tokenizer = cleansing.create_tokenizer(df['SentimentText'])
 encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, data_upsampled['SentimentText'])
 padded_doc = cleansing.padding_doc(encoded_doc, max_length)
