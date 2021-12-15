@@ -11,6 +11,7 @@ RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install curl -y
 
 COPY . .
+COPY ./pretrained/. /root/pythainlp-data/
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://localhost:80 || exit 1

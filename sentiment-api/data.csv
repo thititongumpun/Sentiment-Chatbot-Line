@@ -287,3 +287,13 @@ Negative,ไอขยะเปียก,logistic
 Negative,ไอขยะเปียก,logistic
 Negative,ไอขยะเปียกฟหกก,logistic
 Neutral,ไอขยะเปียกอิอิอิอิอิอิอิอิ,logistic
+Neutral,จ่ายเงินไปก่อน กับเก็บเงินปลายทาง การบริการความใส่ใจต่างกันจังเลยนะคะ,lstm
+Neutral,จ่ายเงินไปก่อน กับเก็บเงินปลายทาง การบริการความใส่ใจต่างกันจังเลยนะคะ,naivebayes
+Neutral,จ่ายเงินไปก่อน กับเก็บเงินปลายทาง การบริการความใส่ใจต่างกันจังเลยนะคะ,logistic
+Negative,สวะสิ้นดี,lstm
+Neutral,บริการดีค้าบ,lstm
+Neutral,กินข้าวยังวัยรุ่น,lstm
+Negative,กินข้าวยังวัยรุ่น,lstm
+Negative,หิวหวะ,lstm
+Negative,บริการดีครับ,lstm
+Neutral,แย่มากครับผม,lstm

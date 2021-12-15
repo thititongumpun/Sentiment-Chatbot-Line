@@ -7,7 +7,7 @@ import logging
 from fastapi.logger import logger
 from pythainlp.util import normalize
 import re
-from utils import cleansing
+from utils import cleansing, predict_output
 import numpy as np
 import tensorflow as tf
 import pandas as pd
@@ -60,7 +60,7 @@ train = shuffle(train)
 test = shuffle(test)
 data_majority = train[train['Sentiment'] == 'Neutral']
 data_minority = train[train['Sentiment'] == 'Negative']
-data_minority_upsampled = resample(data_minority, 
+data_minority_upsampled = resample(data_minority,
                                 replace=True,
                                 n_samples= data_majority.shape[0],
                                 random_state=123)
@@ -71,7 +71,8 @@ logger.info('...cleansing data...')
 max_length=484
 # unique_category = list(set(data_upsampled['Sentiment']))
 # print(unique_category)
-unique_category = ['Neutral', 'Negative']
+# unique_category = ['Neutral', 'Negative']
+unique_category = ['Negative', 'Neutral']
 predict_word_tokenizer = cleansing.create_tokenizer(df['SentimentText'])
 encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, data_upsampled['SentimentText'])
 padded_doc = cleansing.padding_doc(encoded_doc, max_length)
@@ -101,9 +102,7 @@ def get_final_output(pred, classes):
   classes = np.array(classes)
   ids = np.argsort(-predictions)
   classes = classes[ids]
-  
   predictions = -np.sort(-predictions)
-  
   for i in range(pred.shape[1]):
     logger.info("%s has confidence = %s" % (classes[i], (predictions[i])))
     return classes[i], predictions[i]
@@ -114,14 +113,14 @@ async def read_root():
 
 @app.get("/predict")
 async def get_predict(sentimentText: str):
-  sentimentText = normalize(sentimentText)        
+  sentimentText = normalize(sentimentText)
   sentimentTextToken = cleansing.cleansingTextToken(sentimentText)
-  logger.info(sentimentTextToken)                        
+  logger.info(sentimentTextToken)
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = vector.transform(text)
   tf_idf_vec = lr_tf_vector.transform(vec)
-  prediction = model.predict(tf_idf_vec)  
+  prediction = model.predict(tf_idf_vec)
   data = [prediction[0], sentimentText, 'logistic']
   await initial_csv(data)
   return {"Sentiment" : sentimentText, "Tokenize": sentimentTextToken, "Predict": prediction[0], "Service Type": guard}
@@ -130,12 +129,12 @@ async def get_predict(sentimentText: str):
 async def get_predict(sentimentText: str):
   sentimentText = normalize(sentimentText)
   sentimentTextToken = cleansing.cleansingTextToken(sentimentText)
-  logger.info(sentimentTextToken)                        
+  logger.info(sentimentTextToken)
   guard = service_type(sentimentText)
   text = [sentimentText]
   vec = nb_vector.transform(text)
   tf_idf_vec = nb_tf_vector.transform(vec)
-  prediction = nb_model.predict(tf_idf_vec)  
+  prediction = nb_model.predict(tf_idf_vec)
   data = [prediction[0], sentimentText, 'naivebayes']
   await initial_csv(data)
   return {"Sentiment" : sentimentText, "Tokenize": sentimentTextToken, "Predict": prediction[0], "Service Type": guard}
@@ -147,9 +146,11 @@ async def get_lstm_predict(sentimentText: str):
   guard = service_type(sentimentText)
   pred = predictLSTM(sentimentText)
   res = get_final_output(pred, unique_category)
+  confidence = predict_output.get_output_confident_type(pred, unique_category)
+  confidenceSubType = predict_output.get_output_confident_opposite_type(pred, unique_category)
   data = [res[0], sentimentText, 'lstm']
   await initial_csv(data)
-  return {"Sentiment" : sentimentText, "Tokenize": sentimentTextToken, "Predict": res[0], "Service Type": guard}
+  return {"Sentiment" : sentimentText, "Tokenize": sentimentTextToken, "Predict": res[0], "Service Type": guard, "Confidence": confidence, "ConfidenceSubType": confidenceSubType}
 
 @app.post("/data", response_model=SentimentData, status_code=200)
 async def get_data(sentiment: SentimentData) -> SentimentData:
