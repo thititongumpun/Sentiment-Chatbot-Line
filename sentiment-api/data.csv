@@ -297,3 +297,15 @@ Negative,กินข้าวยังวัยรุ่น,lstm
 Negative,หิวหวะ,lstm
 Negative,บริการดีครับ,lstm
 Neutral,แย่มากครับผม,lstm
+Neutral,ทดสอบ 32132133,lstm
+Negative,บริการกากหมามาก,lstm
+Negative,บริการกากหมามาก,naivebayes
+Negative,บริการกากหมามาก,logistic
+Negative,บริการกากหมามาก,lstm
+Neutral,มีโปรไรมั้ง,lstm
+Neutral,โปร 12 เดือน 12 พังตลอดเลย,lstm
+Neutral,โปร 12 เดือน 12 ใช้งานไม่ได้ตลอดเลย,lstm
+Negative,โปร 12 เดือน 12 ใช้งานไม่ได้ตลอดเลย ห่วยมาก,lstm
+Neutral,โปร 12 เดือน 12 ใช้งานไม่ได้ตลอดเลย,lstm
+Negative,โปร 12 เดือน 12 ใช้งานไม่ได้ตลอดเลย แจ้งเรื่องหน่อย,lstm
+Neutral,โปร 12 เดือน 12 ใช้งานไม่ได้ตลอดเลย,logistic

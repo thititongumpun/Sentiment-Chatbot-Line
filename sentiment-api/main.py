@@ -1,19 +1,17 @@
 from joblib import load
 from fastapi import FastAPI, HTTPException
 from serviceType import service_type
-from Models.SentimentData import SentimentData
 from Service.init_csv import initial_csv
 import logging
 from fastapi.logger import logger
 from pythainlp.util import normalize
-import re
 from utils import cleansing, predict_output
 import numpy as np
 import tensorflow as tf
 import pandas as pd
 from logging.config import dictConfig
-import logging
 from Models.logger import LogConfig
+from Models.SentimentData import SentimentData
 from sklearn.utils import resample, shuffle
 from pythainlp.ulmfit import *
 
@@ -26,17 +24,15 @@ app = FastAPI()
 logger.info('Starting application')
 
 logger.info("....load models....")
-vector = load("./Algorithm/vectors.joblib")
-lr_tf_vector = load('./Algorithm/lr_tf_vectors.joblib')
-model = load("./Algorithm/logistic.joblib")
-nb_vector = load('./Algorithm/nb_vectors.joblib')
-nb_model = load('./Algorithm/naive.joblib')
-nb_tf_vector = load('./Algorithm/nb_tf_vectors.joblib')
-
 def loadModel():
-  global predict_model
+  global predict_model, vector, lr_tf_vector, model, nb_vector, nb_model, nb_tf_vector
   predict_model = load_model('./Algorithm/lstm.h5')
-
+  vector = load("./Algorithm/vectors.joblib")
+  lr_tf_vector = load('./Algorithm/lr_tf_vectors.joblib')
+  model = load("./Algorithm/logistic.joblib")
+  nb_vector = load('./Algorithm/nb_vectors.joblib')
+  nb_model = load('./Algorithm/naive.joblib')
+  nb_tf_vector = load('./Algorithm/nb_tf_vectors.joblib')
 loadModel()
 logger.info('....done....')
 
@@ -48,34 +44,13 @@ df['SentimentText'] = df['SentimentText'].apply(cleansing.text_process)
 nan_value = float("NaN")
 df.replace("", nan_value, inplace=True)
 df.dropna(subset = ["SentimentText"], inplace=True)
-
-data_majority = df[df['Sentiment'] == 'Neutral']
-data_minority = df[df['Sentiment'] == 'Negative']
-
-train = pd.concat([data_majority.sample(frac=0.8,random_state=200),
-        data_minority.sample(frac=0.8,random_state=200)])
-test = pd.concat([data_majority.drop(data_majority.sample(frac=0.8,random_state=200).index),
-        data_minority.drop(data_minority.sample(frac=0.8,random_state=200).index)])
-train = shuffle(train)
-test = shuffle(test)
-data_majority = train[train['Sentiment'] == 'Neutral']
-data_minority = train[train['Sentiment'] == 'Negative']
-data_minority_upsampled = resample(data_minority,
-                                replace=True,
-                                n_samples= data_majority.shape[0],
-                                random_state=123)
-data_upsampled = pd.concat([data_majority, data_minority_upsampled])
 logger.info('....done....')
 
 logger.info('...cleansing data...')
 max_length=484
-# unique_category = list(set(data_upsampled['Sentiment']))
-# print(unique_category)
 unique_category = ['Neutral', 'Negative']
 # unique_category = ['Negative', 'Neutral']
 predict_word_tokenizer = cleansing.create_tokenizer(df['SentimentText'])
-encoded_doc = cleansing.encoding_doc(predict_word_tokenizer, data_upsampled['SentimentText'])
-padded_doc = cleansing.padding_doc(encoded_doc, max_length)
 logger.info('...done...')
 logger.info('api ready....')
 
@@ -96,16 +71,6 @@ def predictLSTM(text):
   pred = predict_model.predict(x)
 
   return pred
-
-def get_final_output(pred, classes):
-  predictions = pred[0]
-  classes = np.array(classes)
-  ids = np.argsort(-predictions)
-  classes = classes[ids]
-  predictions = -np.sort(-predictions)
-  for i in range(pred.shape[1]):
-    logger.info("%s has confidence = %s" % (classes[i], (predictions[i])))
-    return classes[i], predictions[i]
 
 @app.get("/")
 async def read_root():
@@ -145,7 +110,7 @@ async def get_lstm_predict(sentimentText: str):
   sentimentTextToken = cleansing.cleansingTextToken(sentimentText)
   guard = service_type(sentimentText)
   pred = predictLSTM(sentimentText)
-  res = get_final_output(pred, unique_category)
+  res = predict_output.get_final_output(pred, unique_category)
   confidence = predict_output.get_output_confident_type(pred, unique_category)
   confidenceSubType = predict_output.get_output_confident_opposite_type(pred, unique_category)
   data = [res[0], sentimentText, 'lstm']
