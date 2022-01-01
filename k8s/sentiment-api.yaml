@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentimentapi-deployment
+  labels:
+    app: sentimentapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentimentapi
+  template:
+    metadata:
+      labels:
+        app: sentimentapi
+    spec:
+      containers:
+      - name: sentimentapi
+        image: thititongumpun/sentimentapi:0.0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: sentimentapi-svc
+    labels:
+      app: sentimentapi
+  spec:
+    selector:
+      app: sentimentapi
+    ports:
+      - port: 80
+        targetPort: 80
+    type: NodePort
