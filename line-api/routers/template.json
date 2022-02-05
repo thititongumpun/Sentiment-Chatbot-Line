@@ -1,0 +1,93 @@
+// {
+//                     "type": "bubble",
+//                     "hero": {
+//                         "type": "image",
+//                         "url": "https://kmutnb.ac.th/getattachment/about/symbols/logo_kmutnb-(6).png.aspx?width=200&height=200",
+//                         "size": "full",
+//                         "aspectRatio": "16:9",
+//                         "aspectMode": "fit"
+//                     },
+//                     "body": {
+//                         "type": "box",
+//                         "layout": "vertical",
+//                         "contents": [
+//                         {
+//                             "type": "text",
+//                             "text": "Sentiment Service Prediction",
+//                             "weight": "bold",
+//                             "size": "md",
+//                             "margin": "none",
+//                             "align": "center",
+//                             "adjustMode": "shrink-to-fit"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": "Text:",
+//                             "size": "md",
+//                             "weight": "bold"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": str(sentiment),
+//                             "size": "sm",
+//                             "wrap": True
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": "Tokenize:",
+//                             "size": "md",
+//                             "weight": "bold"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": str(tokenizeText),
+//                             "size": "sm",
+//                             "wrap": True
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": "Logistic:",
+//                             "size": "md",
+//                             "weight": "bold"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": str(lr_predict),
+//                             "size": "sm"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": "Naive Bayes:",
+//                             "size": "md",
+//                             "weight": "bold"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": str(nb_predict),
+//                             "size": "sm"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": "LSTM:",
+//                             "size": "md",
+//                             "weight": "bold"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": str(lstm_predict),
+//                             "size": "sm"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": "Service Type:",
+//                             "size": "md",
+//                             "weight": "bold"
+//                         },
+//                         {
+//                             "type": "text",
+//                             "text": str(serviceType),
+//                             "size": "sm"
+//                         }
+//                     ]
+//                 }
+//             }

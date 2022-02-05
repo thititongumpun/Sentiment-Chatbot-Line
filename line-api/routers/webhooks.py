@@ -63,21 +63,13 @@ def message_text(event):
     print("!!!!!!!!!!!!!!!!!!!!!!")
 
     params = {'sentimentText': event.message.text}
-    lr = httpx.get(URL, params=params)
     lstm = httpx.post(LSTM_URL, params=params)
-    nb = httpx.post(NB_URL, params=params)
-    sentiment = lr.json()['Sentiment']
-    tokenizeText = lr.json()['Tokenize']
-    lr_predict = lr.json()['Predict']
-    nb_predict = nb.json()['Predict']
+    sentiment = lstm.json()['Sentiment']
+    tokenizeText = lstm.json()['Tokenize']
     lstm_predict = lstm.json()['Predict']
-    serviceType = lr.json()['Service Type']
-    # textLine = f'Text: {sentiment}'
-    # tokenizeLine = f'Tokenize: {tokenizeText}'
-    # lrLine = f'LR_Predict: {lr_predict}'
-    # nbLine = f'NB_Predict: {nb_predict}'
-    # lstmLine = f'LSTM_Predict: {lstm_predict}'
-    # serviceTypeLine = f'Service Type: {serviceType}'
+    neutralConfidence = lstm.json()['Confidence']
+    negativeConfidence = lstm.json()['ConfidenceSubType']
+    serviceType = lstm.json()['Service Type']
 
     line_bot_api.reply_message(
         event.reply_token,
@@ -132,35 +124,29 @@ def message_text(event):
                         },
                         {
                             "type": "text",
-                            "text": "Logistic:",
-                            "size": "md",
-                            "weight": "bold"
-                        },
-                        {
-                            "type": "text",
-                            "text": str(lr_predict),
-                            "size": "sm"
-                        },
-                        {
-                            "type": "text",
-                            "text": "Naive Bayes:",
-                            "size": "md",
-                            "weight": "bold"
-                        },
-                        {
-                            "type": "text",
-                            "text": str(nb_predict),
-                            "size": "sm"
-                        },
-                        {
-                            "type": "text",
-                            "text": "LSTM:",
+                            "text": "Predict:",
                             "size": "md",
                             "weight": "bold"
                         },
                         {
                             "type": "text",
                             "text": str(lstm_predict),
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": "Confidence:",
+                            "size": "md",
+                            "weight": "bold"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(neutralConfidence),
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": str(negativeConfidence),
                             "size": "sm"
                         },
                         {
