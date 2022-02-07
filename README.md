@@ -8,5 +8,5 @@ LINE_CHANNEL_SECRET=\
 API_ENV=developer\
 SENTIMENT_API=Url
 
-# mkdir pretrained & download wiki_lstm to pretrained\
+# mkdir pretrained & download wiki_lstm to pretrained
 https://pythainlp.github.io/pythainlp-corpus/wiki_lm_lstm.html
